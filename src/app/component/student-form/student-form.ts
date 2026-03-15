@@ -17,10 +17,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CollegeYear } from '../../enum/collegeyear';
+import { FirstLetterCapitalize } from '../../shared/directive/firstlettercapitalize';
 
 @Component({
   selector: 'app-student-form',
-  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule,Focus],
+  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule,Focus,FirstLetterCapitalize],
   templateUrl: './student-form.html',
   styleUrl: './student-form.css',
 })
