@@ -3,6 +3,6 @@ export interface Address {
     taluka: string;
     district: string;
     state: string;
-    pincode: number;
     country: string;
+    pincode: number;
 }

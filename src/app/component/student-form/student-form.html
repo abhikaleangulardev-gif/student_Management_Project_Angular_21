@@ -6,7 +6,7 @@
                     <h2 class="text-center text-success bg-dark p-2">Student Information</h2>
                 </div>
                 <div class="card-body my-3">
-                    <form [formGroup]="myStudentForm">
+                    <form [formGroup]="myStudentForm" (ngSubmit)="onSubmitStudentForm()">
 
                         <mat-tab-group [(selectedIndex)]="selectedTabIndex">
 
@@ -22,19 +22,19 @@
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>First Name</mat-label>
-                                            <input matInput aria-label="firstname">
+                                            <input matInput aria-label="firstname" formControlName="firstname">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Middle Name</mat-label>
-                                            <input matInput aria-label="middlename">
+                                            <input matInput aria-label="middlename" formControlName="middlename">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Last Name</mat-label>
-                                            <input matInput aria-label="lastname">
+                                            <input matInput aria-label="lastname" formControlName="lastname">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -44,13 +44,13 @@
                                     <div class="col-sm-8">
                                         <mat-form-field class="w-100">
                                             <mat-label>Full Name</mat-label>
-                                            <input matInput aria-label="Fullname">
+                                            <input matInput aria-label="Fullname" formControlName="fullname" class="fullname">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Image</mat-label>
-                                            <input matInput aria-label="Image,">
+                                            <input matInput aria-label="Image" formControlName="image">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -60,13 +60,13 @@
                                     <div class="col-sm-6">
                                         <mat-form-field class="w-100">
                                             <mat-label>Age</mat-label>
-                                            <input type="number" matInput aria-label="age">
+                                            <input type="number" matInput aria-label="age" formControlName="age">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-6">
                                         <mat-form-field class="w-100">
                                             <mat-label>Email Adrress</mat-label>
-                                            <input type="email" matInput aria-label="email">
+                                            <input type="email" matInput aria-label="email" formControlName="email">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -75,13 +75,14 @@
                                     <div class="col-sm-6">
                                         <mat-form-field class="w-100">
                                             <mat-label>Mobile Number</mat-label>
-                                            <input type="number" matInput aria-label="contact">
+                                            <input type="number" matInput aria-label="contact"
+                                                formControlName="contact">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-6">
                                         <mat-form-field class="w-100">
                                             <mat-label>Select Gender</mat-label>
-                                            <mat-select (selectionChange)="goToNextTab()">
+                                            <mat-select (selectionChange)="goToNextTab()" formControlName="gender">
                                                 @for (gender of myGender(); track $index) {
                                                 <mat-option [value]="gender" [class]="{
                                                     'text-success': gender === 'Male',
@@ -101,123 +102,145 @@
                                 <!-- COLLEGE DETAIL TAB -->
                                 @if(labelname === 'College Detail') {
 
-                                <!-- collegename, collegeDepartment-->
-                                <div class="row p-3">
-                                    <div class="col-sm-6">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>College Name</mat-label>
-                                            <input type="text" matInput aria-label="collegename">
-                                        </mat-form-field>
+                                <div formGroupName="collegeDetail">
+                                    <!-- collegename, collegeDepartment-->
+                                    <div class="row p-3">
+                                        <div class="col-sm-6">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>College Name</mat-label>
+                                                <input type="text" matInput aria-label="collegename"
+                                                    formControlName="collegename">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>College Department</mat-label>
+                                                <input type="text" matInput aria-label="collegeDepartment"
+                                                    formControlName="collegeDepartment">
+                                            </mat-form-field>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>College Department</mat-label>
-                                            <input type="text" matInput aria-label="collegeDepartment">
-                                        </mat-form-field>
+
+
+                                    <!-- admissionDate,college Current Year -->
+                                    <div class="row p-3">
+                                        <div class="col-sm-6">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>Admission Date</mat-label>
+                                                <input type="date" matInput [matDatepicker]="picker"
+                                                    aria-label="admissionDate" formControlName="admissionDate">
+
+                                                <mat-datepicker-toggle matIconSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>College Current Year</mat-label>
+                                                <mat-label>College Current Year</mat-label>
+
+                                                <mat-select formControlName="collegeCurrentYear">
+
+                                                    @for(year of myCollegeYears(); track $index){
+                                                    <mat-option [value]="year">{{year}}</mat-option>
+                                                    }
+
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
                                     </div>
+
+                                    <!-- percentage , isActive -->
+                                    <div class="row p-3">
+                                        <div class="col-sm-6">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>Student Percentage</mat-label>
+                                                <input type="number" matInput aria-label="studentParcentage"
+                                                    formControlName="percentage">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <section class="example-section">
+                                                <mat-checkbox class="example-margin" formControlName="isActive">Ia
+                                                    Active</mat-checkbox>
+                                            </section>
+                                        </div>
+                                    </div>
+
+                                    <!-- Skills -->
+                                    <div class="row my-3">
+                                        <div class="col-sm-12 d-flex justify-content-between align-items-center">
+                                            <h4 class="text-primary m-0">Skills</h4>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                (click)="addStudentSkills()">+ Add</button>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div formArrayName="skills">
+                                        @for(skill of skills.controls;track $index){
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Recipient's username"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2"
+                                                (keyup.enter)="goToNextTab()" [formControlName]="$index">
+                                            <button class="btn btn-outline-danger" type="button" id="button-addon2"
+                                                (click)="removeStudentSkills($index)">Remove</button>
+                                        </div>
+                                        }
+                                    </div>
+                                    <hr>
                                 </div>
-
-
-                                <!-- admissionDate,college Current Year -->
-                                <div class="row p-3">
-                                    <div class="col-sm-6">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>Admission Date</mat-label>
-                                            <input type="text" matInput aria-label="admissionDate">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>College Current Year</mat-label>
-                                            <input type="text" matInput aria-label="collegeCurrentYear">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <!-- percentage , isActive -->
-                                <div class="row p-3">
-                                    <div class="col-sm-6">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>Student Percentage</mat-label>
-                                            <input type="text" matInput aria-label="studentParcentage">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <section class="example-section">
-                                            <mat-checkbox class="example-margin">Ia Active</mat-checkbox>
-                                        </section>
-                                    </div>
-                                </div>
-
-                                <!-- Skills -->
-                                <div class="row my-3">
-                                    <div class="col-sm-12 d-flex justify-content-between align-items-center">
-                                        <h4 class="text-primary m-0">Skills</h4>
-                                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                            (click)="addStudentSkills()">+ Add</button>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-                                @for(skill of skills.controls;track $index){
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Recipient's username"
-                                        aria-label="Recipient's username" aria-describedby="button-addon2" (keyup.enter)="goToNextTab()">
-                                    <button class="btn btn-outline-danger" type="button" id="button-addon2"
-                                        (click)="removeStudentSkills($index)">Remove</button>
-                                </div>
-                                }
-                                <hr>
-
-
-
                                 }
 
                                 <!-- ADDRESS DETAIL TAB -->
                                 @if(labelname === 'Address Detail') {
 
-                                <!-- city,taluka,dist -->
-                                <div class="row p-3">
-                                    <div class="col-sm-4">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>City Name</mat-label>
-                                            <input matInput aria-label="cityname">
-                                        </mat-form-field>
+                                <div formGroupName="address">
+                                    <!-- city,taluka,dist -->
+                                    <div class="row p-3">
+                                        <div class="col-sm-4">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>City Name</mat-label>
+                                                <input matInput aria-label="cityname" formControlName="city">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>Taluka Name</mat-label>
+                                                <input matInput aria-label="taluka" formControlName="taluka">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>District Name</mat-label>
+                                                <input matInput aria-label="districtname" formControlName="district">
+                                            </mat-form-field>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>Taluka Name</mat-label>
-                                            <input matInput aria-label="taluka">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>District Name</mat-label>
-                                            <input matInput aria-label="districtname">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
 
-                                <!-- state,country,pincode -->
-                                <div class="row p-3">
-                                    <div class="col-sm-4">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>state Name</mat-label>
-                                            <input matInput aria-label="statename">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>Country Name</mat-label>
-                                            <input matInput aria-label="countryname">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <mat-form-field class="w-100">
-                                            <mat-label>Pin Code</mat-label>
-                                            <input matInput aria-label="pincode">
-                                        </mat-form-field>
+                                    <!-- state,country,pincode -->
+                                    <div class="row p-3">
+                                        <div class="col-sm-4">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>state Name</mat-label>
+                                                <input matInput aria-label="statename" formControlName="state">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>Country Name</mat-label>
+                                                <input matInput aria-label="countryname" formControlName="country">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>Pin Code</mat-label>
+                                                <input matInput aria-label="pincode" formControlName="pincode">
+                                            </mat-form-field>
+                                        </div>
                                     </div>
                                 </div>
 

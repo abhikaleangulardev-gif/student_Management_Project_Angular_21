@@ -17,3 +17,15 @@ mat-tab-group{
 }
 
 
+/* .fullname.mat-mdc-input-element{
+    color: green;
+    font-weight: bold;
+} */
+
+.fullname{
+    color: rgb(96, 155, 96) !important;
+    font-weight: bold !important;
+}   
+
+
+
