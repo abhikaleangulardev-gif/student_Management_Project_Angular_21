@@ -4,6 +4,9 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { Gender } from '../../enum/gender';
 import { Student } from '../../model/student';
 
+// custom directive import
+import { Focus } from '../../shared/directive/focus';
+
 // angular material module
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
@@ -17,7 +20,7 @@ import { CollegeYear } from '../../enum/collegeyear';
 
 @Component({
   selector: 'app-student-form',
-  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule],
+  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule,Focus],
   templateUrl: './student-form.html',
   styleUrl: './student-form.css',
 })
@@ -113,6 +116,10 @@ export class StudentForm implements OnInit {
 
   goToNextTab() {
     this.selectedTabIndex++;
+  }
+
+  onTabChange(index:any){
+    console.log('tab changed',index);
   }
 
   // skill code
