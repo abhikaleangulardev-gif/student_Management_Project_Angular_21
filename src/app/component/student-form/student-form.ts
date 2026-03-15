@@ -65,7 +65,7 @@ export class StudentForm implements OnInit {
       firstname: this.fb.control('', Validators.required),
       middlename: this.fb.control('', Validators.required),
       lastname: this.fb.control('', Validators.required),
-      fullname: this.fb.control({ value: '', disabled: true }, Validators.required),
+      fullname: this.fb.control('', Validators.required),
       image: this.fb.control('', Validators.required),
       age: this.fb.control(0, Validators.required),
       email: this.fb.control('', Validators.required),
@@ -105,7 +105,7 @@ export class StudentForm implements OnInit {
     const myMiddlename = this.myStudentForm.get('middlename')?.value;
     const myLastname = this.myStudentForm.get('lastname')?.value;
 
-    const myFullname = `${myFirstname} ${myMiddlename} ${myLastname}`;
+    const myFullname = `${myFirstname} ${myMiddlename} ${myLastname}`.toUpperCase();
 
     this.myStudentForm.get('fullname')?.setValue(myFullname);
   }
@@ -114,6 +114,7 @@ export class StudentForm implements OnInit {
 
   // go to the next tab
   selectedTabIndex = 0;
+  
 
   goToNextTab() {
     this.selectedTabIndex++;
