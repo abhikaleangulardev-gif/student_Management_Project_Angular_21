@@ -8,7 +8,7 @@
                 <div class="card-body my-3">
                     <form [formGroup]="myStudentForm" (ngSubmit)="onSubmitStudentForm()">
 
-                        <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+                        <mat-tab-group [(selectedIndex)]="selectedTabIndex"  (selectedIndexChange)="onTabChange($event)" animationDuration="0ms">
 
                             @for (labelname of myTabStudentLabel(); track $index) {
 
@@ -22,7 +22,7 @@
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>First Name</mat-label>
-                                            <input matInput aria-label="firstname" formControlName="firstname">
+                                            <input matInput aria-label="firstname" formControlName="firstname" [appFocus]="labelname === 'Person Detail'">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
@@ -109,7 +109,7 @@
                                             <mat-form-field class="w-100">
                                                 <mat-label>College Name</mat-label>
                                                 <input type="text" matInput aria-label="collegename"
-                                                    formControlName="collegename">
+                                                    formControlName="collegename" [appFocus]="labelname === 'College Detail'">
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-6">
@@ -204,7 +204,7 @@
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>City Name</mat-label>
-                                                <input matInput aria-label="cityname" formControlName="city">
+                                                <input matInput aria-label="cityname" formControlName="city" [appFocus]="labelname === 'Address Detail'">
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-4">
@@ -263,3 +263,4 @@
         </div>
     </div>
 </div>
+
