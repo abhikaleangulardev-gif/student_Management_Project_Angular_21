@@ -8,7 +8,8 @@
                 <div class="card-body my-3">
                     <form [formGroup]="myStudentForm" (ngSubmit)="onSubmitStudentForm()">
 
-                        <mat-tab-group [(selectedIndex)]="selectedTabIndex"  (selectedIndexChange)="onTabChange($event)" animationDuration="0ms">
+                        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)"
+                            animationDuration="0ms">
 
                             @for (labelname of myTabStudentLabel(); track $index) {
 
@@ -22,19 +23,22 @@
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>First Name</mat-label>
-                                            <input matInput aria-label="firstname" formControlName="firstname" [appFocus]="labelname === 'Person Detail'">
+                                            <input matInput aria-label="firstname" formControlName="firstname"
+                                                [appFocus]="labelname === 'Person Detail'" appFirstLetterCaptialize>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Middle Name</mat-label>
-                                            <input matInput aria-label="middlename" formControlName="middlename">
+                                            <input matInput aria-label="middlename" formControlName="middlename"
+                                                appFirstLetterCaptialize>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Last Name</mat-label>
-                                            <input matInput aria-label="lastname" formControlName="lastname">
+                                            <input matInput aria-label="lastname" formControlName="lastname"
+                                                appFirstLetterCaptialize>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -44,7 +48,8 @@
                                     <div class="col-sm-8">
                                         <mat-form-field class="w-100">
                                             <mat-label>Full Name</mat-label>
-                                            <input matInput aria-label="Fullname" formControlName="fullname" class="fullname">
+                                            <input matInput aria-label="Fullname" formControlName="fullname"
+                                                class="fullname">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
@@ -109,14 +114,16 @@
                                             <mat-form-field class="w-100">
                                                 <mat-label>College Name</mat-label>
                                                 <input type="text" matInput aria-label="collegename"
-                                                    formControlName="collegename" [appFocus]="labelname === 'College Detail'">
+                                                    formControlName="collegename"
+                                                    [appFocus]="labelname === 'College Detail'"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-6">
                                             <mat-form-field class="w-100">
                                                 <mat-label>College Department</mat-label>
                                                 <input type="text" matInput aria-label="collegeDepartment"
-                                                    formControlName="collegeDepartment">
+                                                    formControlName="collegeDepartment" appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -139,8 +146,6 @@
                                         <div class="col-sm-6">
                                             <mat-form-field class="w-100">
                                                 <mat-label>College Current Year</mat-label>
-                                                <mat-label>College Current Year</mat-label>
-
                                                 <mat-select formControlName="collegeCurrentYear">
 
                                                     @for(year of myCollegeYears(); track $index){
@@ -204,19 +209,23 @@
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>City Name</mat-label>
-                                                <input matInput aria-label="cityname" formControlName="city" [appFocus]="labelname === 'Address Detail'">
+                                                <input matInput aria-label="cityname" formControlName="city"
+                                                    [appFocus]="labelname === 'Address Detail'"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>Taluka Name</mat-label>
-                                                <input matInput aria-label="taluka" formControlName="taluka">
+                                                <input matInput aria-label="taluka" formControlName="taluka"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>District Name</mat-label>
-                                                <input matInput aria-label="districtname" formControlName="district">
+                                                <input matInput aria-label="districtname" formControlName="district"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -226,13 +235,15 @@
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>state Name</mat-label>
-                                                <input matInput aria-label="statename" formControlName="state">
+                                                <input matInput aria-label="statename" formControlName="state"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>Country Name</mat-label>
-                                                <input matInput aria-label="countryname" formControlName="country">
+                                                <input matInput aria-label="countryname" formControlName="country"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
                                         </div>
                                         <div class="col-sm-4">
@@ -263,4 +274,3 @@
         </div>
     </div>
 </div>
-
