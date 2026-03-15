@@ -114,6 +114,7 @@ export class StudentForm implements OnInit {
 
   // go to the next tab
   selectedTabIndex = 0;
+  
 
   goToNextTab() {
     this.selectedTabIndex++;
