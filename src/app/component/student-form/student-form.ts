@@ -18,10 +18,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CollegeYear } from '../../enum/collegeyear';
 import { FirstLetterCapitalize } from '../../shared/directive/firstlettercapitalize';
+import { skillValidator } from '../../shared/validators/skills-validator';
+import { AllFirstLetterCaptalize } from '../../shared/directive/all-first-letter-captalize';
 
 @Component({
   selector: 'app-student-form',
-  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule,Focus,FirstLetterCapitalize],
+  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, Focus, FirstLetterCapitalize, AllFirstLetterCaptalize],
   templateUrl: './student-form.html',
   styleUrl: './student-form.css',
 })
@@ -62,37 +64,38 @@ export class StudentForm implements OnInit {
 
   initialStudentForm() {
     this.myStudentForm = this.fb.group({
-      firstname: this.fb.control('', Validators.required),
-      middlename: this.fb.control('', Validators.required),
-      lastname: this.fb.control('', Validators.required),
+      firstname: this.fb.control('', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]),
+      middlename: this.fb.control('', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]),
+      lastname: this.fb.control('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
       fullname: this.fb.control('', Validators.required),
       image: this.fb.control('', Validators.required),
-      age: this.fb.control(0, Validators.required),
-      email: this.fb.control('', Validators.required),
-      contact: this.fb.control(0, Validators.required),
+      age: this.fb.control(null, [Validators.required, Validators.min(18), Validators.max(21)]),
+      email: this.fb.control('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]),
+      contact: this.fb.control(null, [Validators.required, Validators.pattern('^[0-9]{10}$')]),
       gender: this.fb.control('', Validators.required),
 
       // college details
       collegeDetail: this.fb.group({
-        collegename: this.fb.control('', Validators.required),
-        collegeDepartment: this.fb.control('', Validators.required),
-        admissionDate: this.fb.control(Date, Validators.required),
-        collegeCurrentYear: this.fb.control(Date, Validators.required),
-        percentage: this.fb.control('', Validators.required),
-        isActive: this.fb.control('', Validators.required),
+        collegename: this.fb.control('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+        collegeDepartment: this.fb.control('', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]),
+        admissionDate: this.fb.control('', Validators.required),
+        collegeCurrentYear: this.fb.control('', Validators.required),
+        percentage: this.fb.control('', [Validators.required, Validators.pattern(/^(100(\.0+)?|[0-9]?\d(\.\d+)?)$/)]),
+        isActive: this.fb.control(false, Validators.requiredTrue),
         skills: this.fb.array([
-          this.fb.control('', Validators.required),
+          this.fb.control('', [Validators.required, skillValidator]),
         ]),
       }),
 
       // address details
-      address: this.fb.group({
-        city: this.fb.control('', Validators.required),
-        taluka: this.fb.control('', Validators.required),
-        district: this.fb.control('', Validators.required),
-        state: this.fb.control('', Validators.required),
-        country: this.fb.control('', Validators.required),
-        pincode: this.fb.control(0, Validators.required),
+      addressDetail: this.fb.group({
+        city: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        taluka: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        district: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        state: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        country: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        pincode: this.fb.control(null, [Validators.required, Validators.pattern('^[0-9]{6}$')
+        ]),
       })
     })
   }
@@ -114,14 +117,14 @@ export class StudentForm implements OnInit {
 
   // go to the next tab
   selectedTabIndex = 0;
-  
+
 
   goToNextTab() {
     this.selectedTabIndex++;
   }
 
-  onTabChange(index:any){
-    console.log('tab changed',index);
+  onTabChange(index: any) {
+    console.log('tab changed', index);
   }
 
   // skill code
@@ -131,7 +134,7 @@ export class StudentForm implements OnInit {
   }
 
   addStudentSkills() {
-    this.skills.push(this.fb.control('', Validators.required));
+    this.skills.push(this.fb.control('', [Validators.required, skillValidator]));
   }
 
   removeStudentSkills(index: number) {
@@ -141,11 +144,31 @@ export class StudentForm implements OnInit {
 
 
   onSubmitStudentForm() {
+
     if (this.myStudentForm.valid) {
       const myPayload = this.myStudentForm.value as Student;
       console.log(myPayload);
     } else {
       alert('correct fillup form.....');
     }
+  }
+
+
+  // apply validation collegedetails in single control college department
+
+  // method -1
+
+  get collegeDepartment() {
+    return this.myStudentForm.get('collegeDetail.collegeDepartment');
+  }
+
+  // method-2
+
+  get collegeDetail() {
+    return this.myStudentForm.get('collegeDetail') as FormGroup;
+  }
+
+  get addressDetail() {
+    return this.myStudentForm.get('addressDetail') as FormGroup;
   }
 }
