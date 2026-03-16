@@ -20,6 +20,8 @@ import { CollegeYear } from '../../enum/collegeyear';
 import { FirstLetterCapitalize } from '../../shared/directive/firstlettercapitalize';
 import { skillValidator } from '../../shared/validators/skills-validator';
 import { AllFirstLetterCaptalize } from '../../shared/directive/all-first-letter-captalize';
+import { StudentApi } from '../../shared/service/student-api';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-form',
@@ -36,7 +38,7 @@ export class StudentForm implements OnInit {
   myCollegeYears: WritableSignal<string[]> = signal([CollegeYear.FirstYear, CollegeYear.SecondYear, CollegeYear.ThirdYear, CollegeYear.FourthYear, CollegeYear.FifthYear]);
 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private studentservice: StudentApi, private router: Router, private activedRouted: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.initialStudentForm();
@@ -148,6 +150,14 @@ export class StudentForm implements OnInit {
     if (this.myStudentForm.valid) {
       const myPayload = this.myStudentForm.value as Student;
       console.log(myPayload);
+      this.studentservice.postStudentDetail(myPayload).subscribe({
+        next: (_resp: any) => {
+          console.log(_resp);
+          alert('successfully Post Method.....');
+          this.router.navigate(['/student-list'], { relativeTo: this.activedRouted });
+        }
+      })
+
     } else {
       alert('correct fillup form.....');
     }
