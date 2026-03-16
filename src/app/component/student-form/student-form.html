@@ -8,7 +8,8 @@
                 <div class="card-body my-3">
                     <form [formGroup]="myStudentForm" (ngSubmit)="onSubmitStudentForm()">
 
-                        <mat-tab-group [(selectedIndex)]="selectedTabIndex"  (selectedIndexChange)="onTabChange($event)" animationDuration="0ms">
+                        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)"
+                            animationDuration="0ms">
 
                             @for (labelname of myTabStudentLabel(); track $index) {
 
@@ -22,20 +23,69 @@
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>First Name</mat-label>
-                                            <input matInput aria-label="firstname" formControlName="firstname" [appFocus]="labelname === 'Person Detail'" appFirstLetterCaptialize>
+                                            <input matInput aria-label="firstname" formControlName="firstname"
+                                                [appFocus]="labelname === 'Person Detail'" appFirstLetterCaptialize>
                                         </mat-form-field>
+
+                                        <!-- first name validation -->
+
+                                        @if(myStudentForm.get('firstname')?.touched &&
+                                        myStudentForm.get('firstname')?.errors?.['required']){
+                                        <span class="text-danger">*First Name Is Required</span>
+                                        }@else if(myStudentForm.get('firstname')?.touched &&
+                                        myStudentForm.get('firstname')?.errors?.['minlength']){
+                                        <span class="text-danger">*Min length is
+                                            {{myStudentForm.get('firstname')?.errors?.['minlength']?.requiredLength}}</span>
+                                        }@else if(myStudentForm.get('firstname')?.touched &&
+                                        myStudentForm.get('firstname')?.errors?.['maxlength']){
+                                        <span class="text-danger">*Max length is
+                                            {{myStudentForm.get('firstname')?.errors?.['maxlength'].requiredLength}}</span>
+                                        }
+
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Middle Name</mat-label>
-                                            <input matInput aria-label="middlename" formControlName="middlename" appFirstLetterCaptialize>
+                                            <input matInput aria-label="middlename" formControlName="middlename"
+                                                appFirstLetterCaptialize>
                                         </mat-form-field>
+
+                                        <!-- middlename validation -->
+                                        @if(myStudentForm.get('middlename')?.touched &&
+                                        myStudentForm.get('middlename')?.errors?.['required']){
+                                        <span class="text-danger">*Middle Name Is Required</span>
+                                        }@else if(myStudentForm.get('middlename')?.touched &&
+                                        myStudentForm.get('middlename')?.errors?.['minlength']){
+                                        <span class="text-danger">*Min length is
+                                            {{myStudentForm.get('middlename')?.errors?.['minlength']?.requiredLength}}</span>
+                                        }@else if(myStudentForm.get('middlename')?.touched &&
+                                        myStudentForm.get('middlename')?.errors?.['maxlength']){
+                                        <span class="text-danger">*Max length is
+                                            {{myStudentForm.get('middlename')?.errors?.['maxlength'].requiredLength}}</span>
+                                        }
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="w-100">
                                             <mat-label>Last Name</mat-label>
-                                            <input matInput aria-label="lastname" formControlName="lastname" appFirstLetterCaptialize>
+                                            <input matInput aria-label="lastname" formControlName="lastname"
+                                                appFirstLetterCaptialize>
                                         </mat-form-field>
+
+                                        <!-- LastName validation -->
+
+                                        @if(myStudentForm.get('lastname')?.touched &&
+                                        myStudentForm.get('lastname')?.errors?.['required']){
+                                        <span class="text-danger">*Last Name Is Required</span>
+                                        }@else if(myStudentForm.get('lastname')?.touched &&
+                                        myStudentForm.get('lastname')?.errors?.['minlength']){
+                                        <span class="text-danger">*Min length is
+                                            {{myStudentForm.get('lastname')?.errors?.['minlength'].requiredLength}}</span>
+                                        }@else if(myStudentForm.get('lastname')?.touched &&
+                                        myStudentForm.get('lastname')?.errors?.['maxlength']){
+                                        <span class="text-danger">*Max length is
+                                            {{myStudentForm.get('lastname')?.errors?.['maxlength'].requiredLength}}</span>
+                                        }
+
                                     </div>
                                 </div>
 
@@ -44,7 +94,8 @@
                                     <div class="col-sm-8">
                                         <mat-form-field class="w-100">
                                             <mat-label>Full Name</mat-label>
-                                            <input matInput aria-label="Fullname" formControlName="fullname" class="fullname"  readonly>
+                                            <input matInput aria-label="Fullname" formControlName="fullname"
+                                                class="fullname" readonly>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
@@ -52,6 +103,12 @@
                                             <mat-label>Image</mat-label>
                                             <input matInput aria-label="Image" formControlName="image">
                                         </mat-form-field>
+
+                                        <!-- image validation -->
+
+                                        @if(myStudentForm.get('image')?.touched && !myStudentForm.get('image')?.valid){
+                                        <span class="text-danger">*Image URL path is required</span>
+                                        }
                                     </div>
                                 </div>
 
@@ -62,12 +119,39 @@
                                             <mat-label>Age</mat-label>
                                             <input type="number" matInput aria-label="age" formControlName="age">
                                         </mat-form-field>
+
+                                        <!-- age validation -->
+
+                                        @if(myStudentForm.get('age')?.touched &&
+                                        myStudentForm.get('age')?.errors?.['required']){
+                                        <span class="text-danger">*Age Is Required</span>
+                                        }@else if(myStudentForm.get('age')?.touched &&
+                                        myStudentForm.get('age')?.errors?.['min']){
+                                        <span class="text-danger">*Minimum Age Is
+                                            {{myStudentForm.get('age')?.errors?.['min'].min}}</span>
+                                        }@else if(myStudentForm.get('age')?.touched &&
+                                        myStudentForm.get('age')?.errors?.['max']){
+                                        <span class="text-danger">*Maximum Age Is
+                                            {{myStudentForm.get('age')?.errors?.['max'].max}}</span>
+                                        }
+
+
                                     </div>
                                     <div class="col-sm-6">
                                         <mat-form-field class="w-100">
                                             <mat-label>Email Adrress</mat-label>
                                             <input type="email" matInput aria-label="email" formControlName="email">
                                         </mat-form-field>
+
+                                        <!-- email validation -->
+                                        @if(myStudentForm.get('email')?.touched &&
+                                        myStudentForm.get('email')?.errors?.['required']){
+                                        <span class="text-danger">*Email Is required</span>
+                                        }@else if(myStudentForm.get('email')?.touched &&
+                                        myStudentForm.get('email')?.errors?.['pattern']){
+                                        <span class="text-danger">*Please Enter Valid Email Address</span>
+                                        }
+
                                     </div>
                                 </div>
                                 <!-- contact,gender -->
@@ -78,6 +162,17 @@
                                             <input type="number" matInput aria-label="contact"
                                                 formControlName="contact">
                                         </mat-form-field>
+
+                                        <!-- contact validation -->
+
+                                        @if(myStudentForm.get('contact')?.touched &&
+                                        myStudentForm.get('contact')?.errors?.['required']){
+                                        <span class="text-danger">*Contact Number Is Required</span>
+                                        }@else if(myStudentForm.get('contact')?.touched &&
+                                        myStudentForm.get('contact')?.errors?.['pattern']){
+                                        <span class="text-danger">*Enter valid 10 digit mobile number</span>
+                                        }
+
                                     </div>
                                     <div class="col-sm-6">
                                         <mat-form-field class="w-100">
@@ -94,6 +189,12 @@
                                             </mat-select>
 
                                         </mat-form-field>
+
+                                        <!-- Gender Validation -->
+                                        @if(myStudentForm.get('gender')?.touched &&
+                                        myStudentForm.get('gender')?.errors?.['required']){
+                                        <span class="text-danger">*Please Select Gender</span>
+                                        }
                                     </div>
                                 </div>
 
@@ -109,8 +210,27 @@
                                             <mat-form-field class="w-100">
                                                 <mat-label>College Name</mat-label>
                                                 <input type="text" matInput aria-label="collegename"
-                                                    formControlName="collegename" [appFocus]="labelname === 'College Detail'" appFirstLetterCaptialize>
+                                                    formControlName="collegename"
+                                                    [appFocus]="labelname === 'College Detail'"
+                                                    appAllFirstLetterCaptalize>
                                             </mat-form-field>
+
+                                            <!-- collegename validation -->
+                                            @if(myStudentForm.get('collegeDetail.collegename')?.touched &&
+                                            myStudentForm.get('collegeDetail.collegename')?.errors?.['required']){
+                                            <span class="text-danger">*College Name Is Required</span>
+                                            }@else if(myStudentForm.get('collegeDetail.collegename')?.touched &&
+                                            myStudentForm.get('collegeDetail.collegename')?.errors?.['minlength']){
+                                            <span class="text-danger">*Min length is
+                                                {{myStudentForm.get('collegeDetail.collegename')?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if(myStudentForm.get('collegeDetail.collegename')?.touched &&
+                                            myStudentForm.get('collegeDetail.collegename')?.errors?.['maxlength']){
+
+                                            <span class="text-danger">*Min length is
+                                                {{myStudentForm.get('collegeDetail.collegename')?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
+
+
                                         </div>
                                         <div class="col-sm-6">
                                             <mat-form-field class="w-100">
@@ -118,6 +238,19 @@
                                                 <input type="text" matInput aria-label="collegeDepartment"
                                                     formControlName="collegeDepartment" appFirstLetterCaptialize>
                                             </mat-form-field>
+
+                                            <!-- college Department Validation -->
+                                            @if(collegeDepartment?.touched && collegeDepartment?.errors?.['required']){
+                                            <span class="text-danger">*College Department Is Required</span>
+                                            }@else if(collegeDepartment?.touched &&
+                                            collegeDepartment?.errors?.['minlength']){
+                                            <span class="text-danger">*Min Length is
+                                                {{collegeDepartment?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if(collegeDepartment?.touched &&
+                                            collegeDepartment?.errors?.['maxlength']){
+                                            <span class="text-danger">*Max Length is
+                                                {{collegeDepartment?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
                                         </div>
                                     </div>
 
@@ -135,6 +268,14 @@
 
                                                 <mat-datepicker #picker></mat-datepicker>
                                             </mat-form-field>
+
+
+                                            <!-- Admission Date Validation -->
+                                            @if(collegeDetail.get('admissionDate')?.touched &&
+                                            collegeDetail.get('admissionDate')?.errors?.['required'] ){
+                                            <span class="text-danger">*Admission Date Is Required</span>
+                                            }
+
                                         </div>
                                         <div class="col-sm-6">
                                             <mat-form-field class="w-100">
@@ -148,6 +289,12 @@
 
                                                 </mat-select>
                                             </mat-form-field>
+
+                                            <!-- college current Year Validation -->
+                                            @if(collegeDetail.get('collegeCurrentYear')?.touched &&
+                                            collegeDetail.get('collegeCurrentYear')?.errors?.['required']){
+                                            <span class="text-danger">*Please Select College Year</span>
+                                            }
                                         </div>
                                     </div>
 
@@ -159,12 +306,28 @@
                                                 <input type="number" matInput aria-label="studentParcentage"
                                                     formControlName="percentage">
                                             </mat-form-field>
+
+                                            <!-- Student Percentage Validation -->
+                                            @if(collegeDetail.get('percentage')?.touched &&
+                                            collegeDetail.get('percentage')?.errors?.['required']){
+                                            <span class="text-danger">*Student Percentage Is Required</span>
+                                            }@else if(collegeDetail.get('percentage')?.touched &&
+                                            collegeDetail.get('percentage')?.errors?.['pattern']){
+                                            <span class="text-danger">*Enter valid percentage (0 - 100)</span>
+                                            }
+
                                         </div>
                                         <div class="col-sm-6">
                                             <section class="example-section">
                                                 <mat-checkbox class="example-margin" formControlName="isActive">Ia
                                                     Active</mat-checkbox>
                                             </section>
+
+                                            <!-- isActive student validation -->
+                                            @if(collegeDetail.get('isActive')?.touched &&
+                                            collegeDetail.get('isActive')?.errors?.['required']){
+                                            <span class="text-danger">*Please Check Active Status</span>
+                                            }
                                         </div>
                                     </div>
 
@@ -180,14 +343,25 @@
                                     <hr>
 
                                     <div formArrayName="skills">
-                                        @for(skill of skills.controls;track $index){
+                                        @for(skill of skills.controls; track $index){
+
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Recipient's username"
-                                                aria-label="Recipient's username" aria-describedby="button-addon2"
-                                                (keyup.enter)="goToNextTab()" [formControlName]="$index">
-                                            <button class="btn btn-outline-danger" type="button" id="button-addon2"
-                                                (click)="removeStudentSkills($index)">Remove</button>
+                                            <input type="text" class="form-control" [formControlName]="$index"
+                                                (keyup.enter)="goToNextTab()" (blur)="skill.markAsTouched()"
+                                                placeholder="Enter Your Skills...." />
+
+                                            <button class="btn btn-outline-danger" type="button"
+                                                (click)="removeStudentSkills($index)">
+                                                Remove
+                                            </button>
                                         </div>
+
+                                        @if (skill.touched && skill.errors?.['required']) {
+                                        <span class="text-danger">*Skill is required</span>
+                                        } @else if (skill.touched && skill.errors?.['invalidSkill']) {
+                                        <span class="text-danger">*Only characters allowed in skills</span>
+                                        }
+
                                         }
                                     </div>
                                     <hr>
@@ -196,26 +370,75 @@
 
                                 <!-- ADDRESS DETAIL TAB -->
                                 @if(labelname === 'Address Detail') {
-                                <div formGroupName="address">
+                                <div formGroupName="addressDetail">
                                     <!-- city,taluka,dist -->
                                     <div class="row p-3">
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>City Name</mat-label>
-                                                <input matInput aria-label="cityname" formControlName="city" [appFocus]="labelname === 'Address Detail'" appFirstLetterCaptialize>
+                                                <input matInput aria-label="cityname" formControlName="city"
+                                                    [appFocus]="labelname === 'Address Detail'"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
+
+                                            <!-- city name vaildation -->
+                                            @if(addressDetail.get('city')?.touched &&
+                                            addressDetail.get('city')?.errors?.['required']){
+                                            <span class="text-danger">*City Name Is Required</span>
+                                            }@else if(addressDetail.get('city')?.touched &&
+                                            addressDetail.get('city')?.errors?.['minlength']){
+                                            <span class="text-danger">*Min Length is
+                                                {{addressDetail.get('city')?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if (addressDetail.get('city')?.touched &&
+                                            addressDetail.get('city')?.errors?.['maxlength']) {
+                                            <span class="text-danger">*Max Length is
+                                                {{addressDetail.get('city')?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>Taluka Name</mat-label>
-                                                <input matInput aria-label="taluka" formControlName="taluka" appFirstLetterCaptialize>
+                                                <input matInput aria-label="taluka" formControlName="taluka"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
+
+                                            <!-- Taluka name validation -->
+
+                                            @if(addressDetail.get('taluka')?.touched &&
+                                            addressDetail.get('taluka')?.errors?.['required']){
+                                            <span class="text-danger">*Taluka Name Is Required</span>
+                                            }@else if(addressDetail.get('taluka')?.touched &&
+                                            addressDetail.get('taluka')?.errors?.['minlength']){
+                                            <span class="text-danger">*Min Length is
+                                                {{addressDetail.get('taluka')?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if (addressDetail.get('taluka')?.touched &&
+                                            addressDetail.get('taluka')?.errors?.['maxlength']) {
+                                            <span class="text-danger">*Max Length is
+                                                {{addressDetail.get('taluka')?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
+
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>District Name</mat-label>
-                                                <input matInput aria-label="districtname" formControlName="district" appFirstLetterCaptialize>
+                                                <input matInput aria-label="districtname" formControlName="district"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
+
+                                            <!-- District name validation -->
+                                            @if(addressDetail.get('district')?.touched &&
+                                            addressDetail.get('district')?.errors?.['required']){
+                                            <span class="text-danger">*District Name Is Required</span>
+                                            }@else if(addressDetail.get('district')?.touched &&
+                                            addressDetail.get('district')?.errors?.['minlength']){
+                                            <span class="text-danger">*Min Length is
+                                                {{addressDetail.get('district')?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if (addressDetail.get('district')?.touched &&
+                                            addressDetail.get('district')?.errors?.['maxlength']) {
+                                            <span class="text-danger">*Max Length is
+                                                {{addressDetail.get('district')?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
+
                                         </div>
                                     </div>
 
@@ -224,20 +447,61 @@
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>state Name</mat-label>
-                                                <input matInput aria-label="statename" formControlName="state" appFirstLetterCaptialize>
+                                                <input matInput aria-label="statename" formControlName="state"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
+
+                                            <!-- State name validation -->
+                                            @if(addressDetail.get('state')?.touched &&
+                                            addressDetail.get('state')?.errors?.['required']){
+                                            <span class="text-danger">*State Name Is Required</span>
+                                            }@else if(addressDetail.get('state')?.touched &&
+                                            addressDetail.get('state')?.errors?.['minlength']){
+                                            <span class="text-danger">*Min Length is
+                                                {{addressDetail.get('state')?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if (addressDetail.get('state')?.touched &&
+                                            addressDetail.get('state')?.errors?.['maxlength']) {
+                                            <span class="text-danger">*Max Length is
+                                                {{addressDetail.get('state')?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
+
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>Country Name</mat-label>
-                                                <input matInput aria-label="countryname" formControlName="country" appFirstLetterCaptialize>
+                                                <input matInput aria-label="countryname" formControlName="country"
+                                                    appFirstLetterCaptialize>
                                             </mat-form-field>
+
+                                            <!-- Country name is vaildation -->
+                                            @if(addressDetail.get('country')?.touched &&
+                                            addressDetail.get('country')?.errors?.['required']){
+                                            <span class="text-danger">*Country Name Is Required</span>
+                                            }@else if(addressDetail.get('country')?.touched &&
+                                            addressDetail.get('country')?.errors?.['minlength']){
+                                            <span class="text-danger">*Min Length is
+                                                {{addressDetail.get('country')?.errors?.['minlength'].requiredLength}}</span>
+                                            }@else if (addressDetail.get('country')?.touched &&
+                                            addressDetail.get('country')?.errors?.['maxlength']) {
+                                            <span class="text-danger">*Max Length is
+                                                {{addressDetail.get('country')?.errors?.['maxlength'].requiredLength}}</span>
+                                            }
                                         </div>
                                         <div class="col-sm-4">
                                             <mat-form-field class="w-100">
                                                 <mat-label>Pin Code</mat-label>
                                                 <input matInput aria-label="pincode" formControlName="pincode">
                                             </mat-form-field>
+
+                                            <!-- pincode number is vaildation -->
+                                            @if(addressDetail.get('pincode')?.touched &&
+                                            addressDetail.get('pincode')?.errors?.['required']){
+                                            <span class="text-danger">*Pincode is required</span>
+                                            }@else if(addressDetail.get('pincode')?.touched &&
+                                            addressDetail.get('pincode')?.errors?.['pattern']){
+                                            <span class="text-danger">*Pincode must be 6 digits</span>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -245,7 +509,8 @@
                                 <!-- save button -->
                                 <div class="row my-5">
                                     <div class="col-sm-12">
-                                        <button type="submit" matButton="filled" class="w-100">Save</button>
+                                        <button type="submit" matButton="filled" class="w-100"
+                                            [disabled]="myStudentForm.invalid">Save</button>
                                     </div>
                                 </div>
                                 }
@@ -261,4 +526,3 @@
         </div>
     </div>
 </div>
-

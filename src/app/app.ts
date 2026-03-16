@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { StudentForm } from "./component/student-form/student-form";
 import { CommonModule } from '@angular/common';
+import { Header } from "./component/header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, StudentForm],
+  imports: [CommonModule, Header],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
