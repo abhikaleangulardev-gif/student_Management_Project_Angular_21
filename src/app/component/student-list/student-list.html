@@ -1,1 +1,37 @@
-<p>student-list works!</p>
+<div class="row my-5">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header bg-secondary">
+                <h4 class="text-warning text-center">Student List Table</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-dark text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sr No.</th>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Branch</th>
+                            <th scope="col">Email Address</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(std of myStudentDetailsInformation(); track $index){
+                        <tr>
+                            <th scope="row">{{$index + 1}}</th>
+                            <td>{{std.fullname}}</td>
+                            <td>{{std.collegeDetail.collegeDepartment}}</td>
+                            <td>{{std.email}}</td>
+                            <td>{{std.contact}}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" (click)="onDisplaySpecificStudentPageDetails($index)">View</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
