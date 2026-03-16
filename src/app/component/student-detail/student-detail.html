@@ -1,1 +1,51 @@
-<p>student-detail works!</p>
+<div class="container my-5">
+    <div class="student-card">
+
+        <div class="profile-section">
+            <img [src]="myStudentDetailsList().image" class="profile-img" aria-label="image">
+
+            <h2 class="student-name">
+                {{myStudentDetailsList().fullname}}
+            </h2>
+
+            <p class="student-email">{{myStudentDetailsList().email}}</p>
+        </div>
+
+        <div class="details-section">
+
+            <div class="info-grid">
+                <div><strong>First Name</strong><span class="text-success"><b>{{myStudentDetailsList().firstname}}</b></span></div>
+                <div><strong>Middle Name</strong><span class="text-success"><b>{{myStudentDetailsList().middlename}}</b></span></div>
+                <div><strong>Last Name</strong><span class="text-success"><b>{{myStudentDetailsList().lastname}}</b></span></div>
+                <div><strong>Age</strong><span class="text-success"><b>{{myStudentDetailsList().age}}</b></span></div>
+                <div><strong>Gender</strong><span class="text-success"><b>{{myStudentDetailsList().gender}}</b></span></div>
+                <div><strong>Contact</strong><span class="text-success"><b>{{myStudentDetailsList().contact}}</b></span></div>
+            </div>
+
+            <hr>
+
+            <h5 class="section-title">College Details</h5>
+
+            <div class="info-grid">
+                <div><strong>College</strong><span class="text-primary"><b>{{myStudentDetailsList().collegeDetail.collegename}}</b></span></div>
+                <div><strong>Department</strong><span class="text-primary"><b>{{myStudentDetailsList().collegeDetail.collegeDepartment}}</b></span>
+                </div>
+                <div><strong>Year</strong><span class="text-primary"><b>{{myStudentDetailsList().collegeDetail.collegeCurrentYear}}</b></span></div>
+            </div>
+
+            <hr>
+
+            <h5 class="section-title">Address Details</h5>
+
+            <div class="info-grid">
+                <div><strong>City</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.city}}</b></span></div>
+                <div><strong>District</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.district}}</b></span></div>
+                <div><strong>State</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.state}}</b></span></div>
+                <div><strong>Country</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.country}}</b></span></div>
+                <div><strong>Pincode</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.pincode}}</b></span></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

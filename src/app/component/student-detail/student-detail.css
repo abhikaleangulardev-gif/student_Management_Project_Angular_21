@@ -1,0 +1,88 @@
+.student-card{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 35px;
+    background: linear-gradient(135deg,#f5f7fa,#e4ecf7);
+    padding: 45px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* Profile Section */
+
+.profile-section{
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+/* Profile Image */
+
+.profile-img{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid #0d6efd;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.profile-img:hover{
+    transform: scale(1.05);
+}
+
+/* Student Name */
+
+.student-name{
+    font-size: 24px;
+    font-weight: 700;
+    color: #0d6efd;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+/* Email */
+
+.student-email{
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Details Section */
+
+.details-section{
+    font-size: 15px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+/* Section Title */
+
+.section-title{
+    color: #198754;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Grid */
+
+.info-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+/* Row */
+
+.info-grid div{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 6px;
+    font-size: 14px;
+}

@@ -11,16 +11,26 @@ import { Student } from '../../model/student';
   styleUrl: './student-detail.css',
 })
 export class StudentDetail implements OnInit {
-  myStudentDetailsInformation: WritableSignal<Student[]> = signal<Student[]>([]);
+  myStudentDetailsList: WritableSignal<any> = signal({});
+  mystdId:any;
 
   constructor(private studentservice: StudentApi, private activedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activedRoute.fragment.subscribe((_resp: any) => {
-      console.log(_resp);
-    });
+    
+    this.activedRoute.queryParams.subscribe((resp:any)=>{
+      console.log(resp);
+      this.mystdId = resp.id;
+    })
+    this.getStudentList();
+  }
 
-   
+  getStudentList(){
+     this.studentservice.getStudentDetail().subscribe((resp:any)=>{
+      const specificstudentDetail = resp.find((std:any) =>std.id === this.mystdId);
+      console.log('specificstudentDetail >>>>',specificstudentDetail);
+      this.myStudentDetailsList.set(specificstudentDetail);
+    })
   }
 
 
