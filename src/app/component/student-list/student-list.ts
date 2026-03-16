@@ -25,13 +25,17 @@ export class StudentList implements OnInit {
         this.myStudentDetailsInformation.set(_resp);
         // console.log(this.myStudentDetailsInformation());
       }
-    })
+    });
   }
 
-  onDisplaySpecificStudentPageDetails(index:any){
+  onDisplaySpecificStudentPageDetails(index:any,std:any){
     this.router.navigate(['/student-detail'],{
       relativeTo:this.activedRoute,
-      fragment:index
+      fragment:index,
+      queryParams:{
+        id:std.id,
+        email:std.email,
+      }
     })
   }
 }
