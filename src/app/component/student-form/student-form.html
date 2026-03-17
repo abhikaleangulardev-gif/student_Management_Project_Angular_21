@@ -260,8 +260,8 @@
                                         <div class="col-sm-6">
                                             <mat-form-field class="w-100">
                                                 <mat-label>Admission Date</mat-label>
-                                                <input type="date" matInput [matDatepicker]="picker"
-                                                    aria-label="admissionDate" formControlName="admissionDate">
+                                                <input matInput [matDatepicker]="picker" aria-label="admissionDate"
+                                                    formControlName="admissionDate">
 
                                                 <mat-datepicker-toggle matIconSuffix [for]="picker">
                                                 </mat-datepicker-toggle>
@@ -509,8 +509,8 @@
                                 <!-- save button -->
                                 <div class="row my-5">
                                     <div class="col-sm-12">
-                                        <button type="submit" matButton="filled" class="w-100"
-                                            [disabled]="myStudentForm.invalid">Save</button>
+                                        <button type="submit" matButton="filled" class="w-100">{{myStudentId ? 'Update':
+                                            'Save'}}</button>
                                     </div>
                                 </div>
                                 }

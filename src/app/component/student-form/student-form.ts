@@ -31,14 +31,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class StudentForm implements OnInit {
   myStudentForm!: FormGroup;
+  myUpdateStudentDetail: WritableSignal<any> = signal<any>(null);
   myTabStudentLabel: WritableSignal<string[]> = signal(['Person Detail', 'College Detail', 'Address Detail']);
+
+
+  // update index:-
+  myStudentId: any;
+
 
 
   myGender: WritableSignal<string[]> = signal([Gender.Male, Gender.Female, Gender.Other]);
   myCollegeYears: WritableSignal<string[]> = signal([CollegeYear.FirstYear, CollegeYear.SecondYear, CollegeYear.ThirdYear, CollegeYear.FourthYear, CollegeYear.FifthYear]);
 
 
-  constructor(private fb: FormBuilder, private studentservice: StudentApi, private router: Router, private activedRouted: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private studentservice: StudentApi, private router: Router, private activedRouted: ActivatedRoute) {
+    const navState = this.router.getCurrentNavigation()?.extras?.state?.['studentDetail'];
+    console.log('navState >>>>', navState);
+    this.myUpdateStudentDetail.set(navState);
+    console.log('myUpdateStudentDetail >>>>', this.myUpdateStudentDetail())
+  }
 
   ngOnInit(): void {
     this.initialStudentForm();
@@ -61,7 +72,7 @@ export class StudentForm implements OnInit {
       this.getFullName();
     });
 
-
+    this.onUpdateStudentList();
   }
 
   initialStudentForm() {
@@ -147,20 +158,43 @@ export class StudentForm implements OnInit {
 
   onSubmitStudentForm() {
 
-    if (this.myStudentForm.valid) {
-      const myPayload = this.myStudentForm.value as Student;
-      console.log(myPayload);
-      this.studentservice.postStudentDetail(myPayload).subscribe({
+    if (this.myStudentId) {
+      // update student form
+      const myUpdateStudentPayLoad = this.myStudentForm.value;
+      console.log('update student data >>>>', myUpdateStudentPayLoad);
+      this.studentservice.updateStudentDetail(this.myStudentId, myUpdateStudentPayLoad).subscribe({
         next: (_resp: any) => {
           console.log(_resp);
-          alert('successfully Post Method.....');
-          this.router.navigate(['/student-list'], { relativeTo: this.activedRouted });
+          this.router.navigate(['/student-list'], {
+            relativeTo: this.activedRouted
+          })
+        },
+        error: (_error: Error) => {
+          console.log(_error);
+        },
+        complete: () => {
+          alert('Successfully Updated Student details.....');
         }
       })
-
+      this.myStudentId = null;
     } else {
-      alert('correct fillup form.....');
+      //new student form
+      if (this.myStudentForm.valid) {
+        const myPayload = this.myStudentForm.value as Student;
+        console.log(myPayload);
+        this.studentservice.postStudentDetail(myPayload).subscribe({
+          next: (_resp: any) => {
+            console.log(_resp);
+            alert('successfully Post Method.....');
+            this.router.navigate(['/student-list'], { relativeTo: this.activedRouted });
+          }
+        })
+
+      } else {
+        alert('correct fillup form.....');
+      }
     }
+
   }
 
 
@@ -180,5 +214,51 @@ export class StudentForm implements OnInit {
 
   get addressDetail() {
     return this.myStudentForm.get('addressDetail') as FormGroup;
+  }
+
+
+  // updateStudentList
+  onUpdateStudentList() {
+    const student = this.myUpdateStudentDetail();
+    if (!student) return;
+
+    this.myStudentId = student.id;
+    console.log(this.myStudentId);
+
+    const studentSkills = student.collegeDetail.skills;
+
+    this.skills.clear();
+    studentSkills.forEach(() => {
+      this.skills.push(this.fb.control('', [Validators.required, skillValidator]));
+    });
+
+    this.myStudentForm.setValue({
+      firstname: student.firstname,
+      middlename: student.middlename,
+      lastname: student.lastname,
+      fullname: student.fullname,
+      image: student.image,
+      age: student.age,
+      email: student.email,
+      contact: student.contact,
+      gender: student.gender,
+      collegeDetail: {
+        collegename: student.collegeDetail.collegename,
+        collegeDepartment: student.collegeDetail.collegeDepartment,
+        admissionDate: student.collegeDetail.admissionDate,
+        collegeCurrentYear: student.collegeDetail.collegeCurrentYear,
+        percentage: student.collegeDetail.percentage,
+        isActive: student.collegeDetail.isActive,
+        skills: studentSkills,
+      },
+      addressDetail: {
+        city: student.addressDetail.city,
+        taluka: student.addressDetail.taluka,
+        district: student.addressDetail.district,
+        state: student.addressDetail.state,
+        country: student.addressDetail.country,
+        pincode: student.addressDetail.pincode,
+      }
+    })
   }
 }

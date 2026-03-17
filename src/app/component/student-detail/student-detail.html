@@ -1,50 +1,139 @@
-<div class="container my-5">
+<div class="container py-4">
     <div class="student-card">
 
+        <!-- Left Profile Section -->
         <div class="profile-section">
-            <img [src]="myStudentDetailsList().image" class="profile-img" aria-label="image">
+            <div class="profile-img-wrapper">
+                <img [src]="myStudentDetailsList().image" class="profile-img" alt="profile">
+                <div class="profile-status" [ngStyle]="myStudentDetailsList().collegeDetail?.isActive ? {'backgroundColor' : 'green'} : {'backgroundColor' : 'red'}"></div>
+            </div>
 
             <h2 class="student-name">
                 {{myStudentDetailsList().fullname}}
             </h2>
 
-            <p class="student-email">{{myStudentDetailsList().email}}</p>
+            <p class="student-email">
+                <i class="bi bi-envelope-fill me-2"></i>
+                {{myStudentDetailsList().email}}
+            </p>
+
+            <button type="button" class="btn btn-update" 
+                (click)="onNavigateStudentForm(myStudentDetailsList())">
+                <i class="bi bi-pencil-square me-2"></i>
+                Update Profile
+            </button>
+
+            <!-- Skills Section -->
+            <div class="skills-container">
+                <div class="skills-header">
+                    <i class="bi bi-stars"></i>
+                    <h5>Expertise Areas</h5>
+                </div>
+                <div class="skills-wrapper">
+                    @for(skill of myStudentDetailsList().collegeDetail?.skills; track $index){
+                    <span class="skill-chip">
+                        {{skill}}
+                    </span>
+                    }
+                </div>
+            </div>
         </div>
 
+        <!-- Right Details Section -->
         <div class="details-section">
 
-            <div class="info-grid">
-                <div><strong>First Name</strong><span class="text-success"><b>{{myStudentDetailsList().firstname}}</b></span></div>
-                <div><strong>Middle Name</strong><span class="text-success"><b>{{myStudentDetailsList().middlename}}</b></span></div>
-                <div><strong>Last Name</strong><span class="text-success"><b>{{myStudentDetailsList().lastname}}</b></span></div>
-                <div><strong>Age</strong><span class="text-success"><b>{{myStudentDetailsList().age}}</b></span></div>
-                <div><strong>Gender</strong><span class="text-success"><b>{{myStudentDetailsList().gender}}</b></span></div>
-                <div><strong>Contact</strong><span class="text-success"><b>{{myStudentDetailsList().contact}}</b></span></div>
-            </div>
-
-            <hr>
-
-            <h5 class="section-title">College Details</h5>
-
-            <div class="info-grid">
-                <div><strong>College</strong><span class="text-primary"><b>{{myStudentDetailsList().collegeDetail.collegename}}</b></span></div>
-                <div><strong>Department</strong><span class="text-primary"><b>{{myStudentDetailsList().collegeDetail.collegeDepartment}}</b></span>
+            <!-- Personal Information -->
+            <div class="details-card">
+                <div class="details-card-header">
+                    <i class="bi bi-person-badge"></i>
+                    <h5>Personal Information</h5>
                 </div>
-                <div><strong>Year</strong><span class="text-primary"><b>{{myStudentDetailsList().collegeDetail.collegeCurrentYear}}</b></span></div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">First Name</span>
+                        <span class="info-value">{{myStudentDetailsList().firstname}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Middle Name</span>
+                        <span class="info-value">{{myStudentDetailsList().middlename}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Last Name</span>
+                        <span class="info-value">{{myStudentDetailsList().lastname}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Age</span>
+                        <span class="info-value">{{myStudentDetailsList().age}} years</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Gender</span>
+                        <span class="info-value">{{myStudentDetailsList().gender}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Contact</span>
+                        <span class="info-value">{{myStudentDetailsList().contact}}</span>
+                    </div>
+                </div>
             </div>
 
-            <hr>
-
-            <h5 class="section-title">Address Details</h5>
-
-            <div class="info-grid">
-                <div><strong>City</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.city}}</b></span></div>
-                <div><strong>District</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.district}}</b></span></div>
-                <div><strong>State</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.state}}</b></span></div>
-                <div><strong>Country</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.country}}</b></span></div>
-                <div><strong>Pincode</strong><span class="text-success"><b>{{myStudentDetailsList().addressDetail.pincode}}</b></span></div>
+            <!-- College Details -->
+            <div class="details-card">
+                <div class="details-card-header">
+                    <i class="bi bi-building"></i>
+                    <h5>Academic Information</h5>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Institution</span>
+                        <span class="info-value">{{myStudentDetailsList().collegeDetail.collegename}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Department</span>
+                        <span class="info-value">{{myStudentDetailsList().collegeDetail.collegeDepartment}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Admission Date</span>
+                        <span class="info-value">{{myStudentDetailsList().collegeDetail.admissionDate | date:'MMM dd, yyyy'}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Current Year</span>
+                        <span class="info-value">{{myStudentDetailsList().collegeDetail.collegeCurrentYear}}</span>
+                    </div>
+                </div>
             </div>
 
+            <!-- Address Details -->
+            <div class="details-card">
+                <div class="details-card-header">
+                    <i class="bi bi-geo-alt"></i>
+                    <h5>Residential Address</h5>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">City</span>
+                        <span class="info-value">{{myStudentDetailsList().addressDetail.city}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">District</span>
+                        <span class="info-value">{{myStudentDetailsList().addressDetail.district}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">State</span>
+                        <span class="info-value">{{myStudentDetailsList().addressDetail.state}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Country</span>
+                        <span class="info-value">{{myStudentDetailsList().addressDetail.country}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Postal Code</span>
+                        <span class="info-value">{{myStudentDetailsList().addressDetail.pincode}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
