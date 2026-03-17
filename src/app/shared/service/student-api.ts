@@ -31,4 +31,8 @@ export class StudentApi {
       })
     )
   }
+
+  updateStudentDetail(id: any, stdObj: Student) {
+    return this.http.put(`https://studentmanagementproject-94620-default-rtdb.firebaseio.com/student/${id}.json`, stdObj)
+  }
 }

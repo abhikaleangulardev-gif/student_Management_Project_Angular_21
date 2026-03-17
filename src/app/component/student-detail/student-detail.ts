@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentApi } from '../../shared/service/student-api';
-import { Student } from '../../model/student';
 
 @Component({
   selector: 'app-student-detail',
-  imports: [CommonModule],
+  imports: [CommonModule,],
   templateUrl: './student-detail.html',
   styleUrl: './student-detail.css',
 })
@@ -14,7 +13,7 @@ export class StudentDetail implements OnInit {
   myStudentDetailsList: WritableSignal<any> = signal({});
   mystdId:any;
 
-  constructor(private studentservice: StudentApi, private activedRoute: ActivatedRoute) { }
+  constructor(private studentservice: StudentApi, private activedRoute: ActivatedRoute,private router:Router) { }
 
   ngOnInit(): void {
     
@@ -33,5 +32,15 @@ export class StudentDetail implements OnInit {
     })
   }
 
+
+  onNavigateStudentForm(student:any){
+    console.log(student);
+    this.router.navigate(['/student-form'],{
+      relativeTo:this.activedRoute,
+      state:{
+        studentDetail:student,
+      }
+    })
+  }
 
 }
